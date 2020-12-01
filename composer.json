@@ -11,6 +11,6 @@
   ],
   "require": {
     "illuminate/database": "^8.15",
-    "php" : ">=7.4.12"
+    "php" : ">=7.4.11"
   }
 }
