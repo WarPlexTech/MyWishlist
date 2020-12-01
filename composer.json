@@ -12,5 +12,9 @@
   "require": {
     "illuminate/database": "^8.15",
     "php" : ">=7.4.11"
+  },
+  "autoload": {
+    "classmap": ["src/models"],
+    "files": ["src/eloquent.php"]
   }
 }

@@ -1,19 +1,14 @@
 <?php
 
-require "vendor/autoload.php";
+require_once __DIR__."/../vendor/autoload.php";
 
-use Illuminate\Database\Capsule\Manager as BD;
+use Illuminate\Database\Capsule\Manager as DB;
 
 $db = new DB();
 
-print("Eloquent est installé !\n");
-
-$config = parse_ini_file('conf.ini');
+$config = parse_ini_file('conf/conf.ini');
 
 $db->addConnection($config);
 
 $db->setAsGlobal();
 $db->bootEloquent();
-
-print("Connecté à la base de données\n");
-
