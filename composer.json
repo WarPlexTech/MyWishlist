@@ -1,0 +1,16 @@
+{
+  "name": "vendor_name/td10",
+  "description": "description",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "antoi",
+      "email": "email@example.com"
+    }
+  ],
+  "require": {
+    "illuminate/database": "^8.15",
+    "php" : ">=7.4.12"
+  }
+}
