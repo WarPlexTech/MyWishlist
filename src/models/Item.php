@@ -1,10 +1,22 @@
 <?php
-namespace mywishlist\models;
 
-use Illuminate\Database\Eloquent\Model;
+namespace MyWishlist\models;
 
-class Item extends Model
+/**
+ * Class Item
+ * @package MyWishlist\models
+ */
+class Item extends BaseModel
 {
     protected $table = 'item';
     protected $primaryKey = 'id';
+    protected $fillable = [
+        'liste_id',
+        'nom',
+        'descr',
+        'img',
+        'url',
+        'tarif',
+        'reserve'
+    ];
 }

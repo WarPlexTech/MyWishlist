@@ -1,0 +1,20 @@
+{% extends "base.twig" %}
+{% block head %}
+<title>MyWishlist : Login</title>
+{% endblock head %}
+
+{% block body %}
+<div id="loginContainer">
+    <h1 id="loginTitle" class="animate__animated animate__fadeIn animate__delay-1s">MyWishlist</h1>
+    <form id="loginBox" class="animate__animated animate__zoomIn" method="post">
+        <h2>Connexion</h2>
+        <p class="greyedOutText">Si le compte n'existe pas, il sera automatiquement créé</p>
+        {% if error %}
+        <p class="errorText errorWrapper">{{ error }}</p>
+        {% endif %}
+        <input type="text" name="username" placeholder="Username">
+        <input type="password" name="password" placeholder="Password">
+        <input type="submit" value="Se connecter">
+    </form>
+</div>
+{% endblock body %}
