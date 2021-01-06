@@ -164,6 +164,11 @@ a {
     }
 }
 
+.setWidthTo15em{
+    width: 15em;
+    overflow: hidden;
+}
+
 .imageListeItem{
     height: 10em;
     width: 10em;

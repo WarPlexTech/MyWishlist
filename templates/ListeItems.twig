@@ -8,11 +8,7 @@
     {% if isSigned %}
         {% include 'navbar.twig' %}
     {% else %}
-        <h1 class="bigTitle">MyWishlist</h1>
-        <div id="navBarList" class="resizeText setTopMargin" style="--new-font-size: 25px; --new-top-margin: -60px">
-            <a class="navBarElement" href="{{ path_for('login') }}">Se connecter</a>
-            <a class="navBarElement" href="{{ path_for('login') }}">Créer un compte</a>
-        </div>
+        {% include 'headernotsigned.twig' %}
     {% endif %}
 
     <div class="boxWrapper animate__animated animate__fadeIn animate__delay-1s">
@@ -23,9 +19,9 @@
         {% for item in itemsListe %}
             <div class="schedule">
                 <img class="imageListeItem" src="/resources/images/{{ item.img }}" alt="<Image de {{ item.nom }}>">
-                <p>{{ item.nom }}</p>
+                <p class="setWidthTo15em">{{ item.nom }}</p>
                 {% if estProprietaire == false %}
-                    <p>{{ auth.translateItemReserve(item.reserve) }}</p>
+                    <p class="setWidthTo15em">{{ auth.translateItemReserve(item.reserve) }}</p>
                 {% endif %}
             </div>
         {% endfor %}
