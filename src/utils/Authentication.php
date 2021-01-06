@@ -44,11 +44,12 @@ class Authentication
     }
 
     /**
-     * Permet de retourner le nom d'utilisateur avec un id donne
+     * Permet de convertir un id de reservation en une chaine lisible
      */
-    public function getUsernameById($id)
+    public function translateItemReserve($id)
     {
-        return Account::find($id)->username;
+        if($id == 0) return 'Cadeau non reservé';
+        return 'Réservé par '.Account::find($id);
     }
 
 }
