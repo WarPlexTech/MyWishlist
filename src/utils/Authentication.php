@@ -43,4 +43,12 @@ class Authentication
         return Account::find($_SESSION['user']);
     }
 
+    /**
+     * Permet de retourner le nom d'utilisateur avec un id donne
+     */
+    public function getUsernameById($id)
+    {
+        return Account::find($id)->username;
+    }
+
 }
