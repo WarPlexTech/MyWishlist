@@ -134,6 +134,16 @@ a {
     }
 }
 
+.successWrapper{
+    padding: 10px 10%;
+    border: solid 1px #16de98;
+    border-radius: 100px;
+}
+
+.successText{
+    color: #16de98;
+}
+
 .errorWrapper{
     padding: 10px 10%;
     border: solid 1px #f53c59;

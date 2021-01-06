@@ -33,6 +33,16 @@ class Authentication
     }
 
     /**
+     * Permet de verifier si un mot de passe donne est le bon
+     * @param $password
+     * @return bool
+     */
+    public function checkPassword($password)
+    {
+        return password_verify($password, $this->getUser()->password);
+    }
+
+    /**
      * Permet de retourner l'utilisateur
      * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|mixed|Account|Account[]|object|null
      */

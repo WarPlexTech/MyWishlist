@@ -16,4 +16,6 @@ $app->group('/profile', function () use ($app) {
     $app->redirect('', 'profile/dashboard');
     $app->get('/disconnect', 'ProfileController:disconnect')->setName('profile.disconnect');
     $app->get('/dashboard', 'ProfileController:getDashboard')->setName('profile.dashboard');
+    $app->get('/settings', 'ProfileController:getSettings')->setName('profile.settings');
+    $app->post('/settings', 'ProfileController:postSettings');
 })->add(new \MyWishlist\middleware\AuthMiddleware($container));
