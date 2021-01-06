@@ -12,9 +12,15 @@
     <div class="boxWrapper animate__animated animate__fadeIn animate__delay-1s">
         <form class="formStyle" method="post">
             <h2>Changement de mot de passe</h2>
+            {% if passerror %}
+                <p class="errorWrapper errorText">{{ passerror }}</p>
+            {% endif %}
+            {% if passsuccess %}
+                <p class="successWrapper successText">{{ passsuccess }}</p>
+            {% endif %}
             <input type="password" name="password_old" placeholder="Mot de passe actuel">
-            <input type="password" name="password_new" placeholder="Nouveau mot de passe">
-            <input type="password" name="password_new_val" placeholder="Confirmation du mots de passe">
+            <input type="password" name="password_new1" placeholder="Nouveau mot de passe">
+            <input type="password" name="password_new2" placeholder="Confirmation du mots de passe">
             <input type="submit" name="changePassword" value="Enregistrer">
         </form>
     </div>
