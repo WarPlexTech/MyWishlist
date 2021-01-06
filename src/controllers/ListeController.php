@@ -49,7 +49,7 @@ class ListeController extends BaseController
         $estProprietaire = false;
 
         if($this->container->auth->isSigned()){
-            if($liste->user_id = $this->container->auth->getUser()->id){
+            if($liste->user_id == $this->container->auth->getUser()->id){
                 $estProprietaire = true;
             }
         }
