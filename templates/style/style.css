@@ -70,7 +70,8 @@ a {
 }
 
 .normalButton:hover {
-    background: #16de98 !important;
+    background: #c058f6 !important;
+    border: 4px solid #c058f6 !important;
     filter: drop-shadow(0 0 0.75rem rgba(0, 0, 0, .5));
     cursor: pointer;
 }
