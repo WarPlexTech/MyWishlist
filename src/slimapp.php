@@ -29,17 +29,19 @@ $container['db'] = function ($container) use ($eloquentcapsule) {
     return $eloquentcapsule;
 };
 
+$container['auth'] = function () {
+    return new Authentication();
+};
+
 $container['view'] = function ($container) {
     $view = new Twig(__DIR__.'/../templates', ['cache' => false]);
     $router = $container->router;
     $uri = $container->request->getUri();
     $view->addExtension(new TwigExtension($router, $uri));
+    $view->getEnvironment()->addGlobal('auth', $container->auth);
     return $view;
 };
 
-$container['auth'] = function () {
-    return new Authentication();
-};
 
 //Controllers
 $container['AuthenticationController'] = function ($container){
@@ -48,6 +50,10 @@ $container['AuthenticationController'] = function ($container){
 
 $container['ProfileController'] = function ($container){
     return new \MyWishlist\controllers\ProfileController($container);
+};
+
+$container['ListeController'] = function ($container){
+    return new \MyWishlist\controllers\ListeController($container);
 };
 
 require __DIR__.'/slimroutes.php';

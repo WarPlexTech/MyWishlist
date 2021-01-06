@@ -1,0 +1,21 @@
+{% extends 'base.twig' %}
+{% block head %}
+    <title>MyWishlist : {{ titreListe }}</title>
+{% endblock head %}
+
+{% block body %}
+    <div class="boxWrapper">
+        <h1>{{ titreListe }}</h1>
+        <p>{{ descriptionListe }}</p>
+    </div>
+    <div class="boxWrapper">
+        {% for item in itemsListe %}
+            <div class ="schedule">
+                <p>{{ item.nom }}</p>
+                {% if estProprietaire == false %}
+                <p>{{ auth.translateItemReserve(1) }}</p>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+{% endblock body %}
