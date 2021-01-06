@@ -5,6 +5,7 @@ namespace MyWishlist\controllers;
 
 
 use MyWishlist\models\Account;
+use MyWishlist\models\Liste;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -13,7 +14,12 @@ class ProfileController extends BaseController
 
     public function getDashboard( ServerRequestInterface $request, ResponseInterface $response)
     {
-        return $this->container->view->render($response, 'profile/dashboard.twig', ['username' => $this->container->auth->getUsername()]);
+        $id = $_SESSION['user'];
+        $lists = Liste::all()->where('user_id','=', $id);
+
+        return $this->container->view->render($response, 'profile/dashboard.twig', [
+            'lists' => $lists->toArray(),
+        ]);
     }
 
     public function disconnect( ServerRequestInterface $request, ResponseInterface $response)

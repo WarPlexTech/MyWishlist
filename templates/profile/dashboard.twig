@@ -5,5 +5,16 @@
 
 {% block body %}
     {% include 'navbar.twig' %}
-    <p>Dashboard de {{ username }}</p>
+    <div class="boxWrapper animate__animated animate__fadeIn animate__delay-1s" >
+        <h1>Liste de {{ auth.getUsername }}</h1>
+        {% for list in lists %}
+            <div class="boxWrapper animate__animated animate__fadeIn animate__delay-1s" >
+                <h1>{{ list.titre }}</h1>
+                <div class="schedule">
+                    <h2>{{ list.description }}</h2>
+                    <p> Date d'éxpiration : {{ list.expiration }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock body %}
