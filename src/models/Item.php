@@ -14,7 +14,7 @@ class Item extends BaseModel
         'liste_id',
         'nom',
         'descr',
-        'img',
+        'images',
         'url',
         'tarif',
         'reserve'

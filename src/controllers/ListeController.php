@@ -31,6 +31,7 @@ class ListeController extends BaseController
             'descriptionListe' => $liste->description,
             'itemsListe' => $items->toArray(),
             'estProprietaire' => $estProprietaire,
+            'isSigned' => $this->container->auth->isSigned(),
         ]);
     }
 }

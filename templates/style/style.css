@@ -164,6 +164,14 @@ a {
     }
 }
 
+.imageListeItem{
+    height: 10em;
+    width: 10em;
+    margin: 20px 0px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
 .formStyle{
     min-width: 300px;
     height: auto;
@@ -222,6 +230,23 @@ a {
     background: #16de98;
     transition: 0s;
 }
+
+.bigTitle{
+    color: aliceblue;
+    text-align: center;
+    font-size: 72px;
+    margin: 0 0 20px 0;
+}
+
+@media screen and (min-width: 1200px) {
+    .setTopMargin{
+        margin-top: var(--new-top-margin);
+    }
+}
+
+.resizeText{
+    font-size: var(--new-font-size);
+}
 /* schedule/autfeeding */
 
 .schedule{
@@ -270,13 +295,6 @@ a {
     100%{
         background-position: 100% 0%;
     }
-}
-
-#loginTitle{
-    color: aliceblue;
-    text-align: center;
-    font-size: 72px;
-    margin: 0 0 20px 0;
 }
 
 #loginBox{
