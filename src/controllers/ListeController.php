@@ -10,15 +10,12 @@ use MyWishlist\models\Liste;
 class ListeController extends BaseController
 {
 
-    protected $idListe;
-
     public function afficherListe($request, $response, $args){
-        $this->idListe = $args['token'];
 
-        $this->idListe = 1;
+        $idListe = (int)$args['token'];
 
-        $liste = Liste::find($this->idListe);
-        $items = Item::all()->where('liste_id','=',$this->idListe);
+        $liste = Liste::find($idListe);
+        $items = Item::all()->where('liste_id','=',$idListe);
 
         $estProprietaire = false;
 

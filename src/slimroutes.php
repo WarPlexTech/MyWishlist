@@ -12,6 +12,7 @@ $app->get('/', 'AuthenticationController:get')->setName('login');
 $app->post('/', 'AuthenticationController:post');
 
 $app->get('/liste/{token}', 'ListeController:afficherListe')->setName('liste');
+$app->get('/liste/{token}/{item}', 'ListeController:afficherDetailItem')->setName('detailItem');
 
 $app->group('/profile', function () use ($app) {
     $app->redirect('/','/profile');
