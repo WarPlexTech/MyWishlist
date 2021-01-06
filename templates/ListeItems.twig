@@ -22,9 +22,10 @@
     <div class="boxWrapper animate__animated animate__fadeIn animate__delay-1s">
         {% for item in itemsListe %}
             <div class="schedule">
+                <img class="imageListeItem" src="/resources/images/{{ item.img }}" alt="<Image de {{ item.nom }}>">
                 <p>{{ item.nom }}</p>
                 {% if estProprietaire == false %}
-                    <p>{{ auth.translateItemReserve(1) }}</p>
+                    <p>{{ auth.translateItemReserve(item.reserve) }}</p>
                 {% endif %}
             </div>
         {% endfor %}
