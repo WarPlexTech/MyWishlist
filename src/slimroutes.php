@@ -11,6 +11,8 @@ use Slim\App;
 $app->get('/', 'AuthenticationController:get')->setName('login');
 $app->post('/', 'AuthenticationController:post');
 
+$app->get('/liste/{token}', 'ListeController:afficherListe')->setName('liste');
+
 $app->group('/profile', function () use ($app) {
     $app->redirect('/','/profile');
     $app->redirect('', 'profile/dashboard');
