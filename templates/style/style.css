@@ -270,6 +270,16 @@ a {
     font-size: var(--new-font-size);
 }
 
+a:hover.cleanA, a:visited.cleanA, a:link.cleanA, a:active.cleanA
+{
+    color: inherit;
+    text-decoration: inherit;
+}
+
+.hoverHand:hover{
+    cursor: pointer;
+}
+
 /* schedule/autfeeding */
 
 .schedule {

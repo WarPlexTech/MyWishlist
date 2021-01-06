@@ -17,8 +17,8 @@
     </div>
     <div class="boxWrapper animate__animated animate__fadeIn animate__delay-1s">
         {% for item in itemsListe %}
-            <a href="{{ tokenliste }}/{{ item.id }}">
-            <div class="schedule">
+            <a class="cleanA" href="{{ tokenliste }}/{{ item.id }}">
+            <div class="schedule collapsible">
                 <img class="imageListeItem" src="/resources/images/{{ item.img }}" alt="<Image de {{ item.nom }}>">
                 <h2 class="setWidthTo15em">{{ item.nom }}</h2>
                 {% if estProprietaire == false %}

@@ -42,9 +42,9 @@ class ListeController extends BaseController
      */
     public function estProprietaire($args){
 
-        $idListe = (int)$args['token'];
+        $tokenliste = (int)$args['token'];
 
-        $liste = Liste::find($idListe);
+        $liste = Liste::all()->where('token', '=', $tokenliste)->first();
 
         $estProprietaire = false;
 
