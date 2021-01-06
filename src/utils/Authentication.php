@@ -49,7 +49,7 @@ class Authentication
     public function translateItemReserve($id)
     {
         if($id == 0) return 'Cadeau non reservé';
-        return 'Réservé par '.Account::find($id);
+        return 'Réservé par '.Account::find($id)->username;
     }
 
 }
