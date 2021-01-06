@@ -3,7 +3,8 @@
         <p>{{ username }}</p>
     </div>
     <div id="navBarList">
-        <a class="navBarElement" href="/">Listes</a>
+        <a class="navBarElement" href="{{ path_for('profile.dashboard') }}">Listes</a>
+        <a class="navBarElement" href="{{ path_for('profile.settings') }}">Paramètres du compte</a>
         <a class="dangerButton" href="{{ path_for('profile.disconnect') }}">Se déconnecter</a>
     </div>
 </div>

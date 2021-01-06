@@ -1,0 +1,28 @@
+{% extends 'base.twig' %}
+{% block head %}
+    <title>MyWishlist : Parametres</title>
+{% endblock head %}
+
+{% block body %}
+    {% include 'navbar.twig' %}
+    <div class="boxWrapper animate__animated animate__fadeIn animate__delay-1s">
+        <h1>Paramètres de {{ username }}</h1>
+    </div>
+
+    <div class="boxWrapper animate__animated animate__fadeIn animate__delay-1s">
+        <form class="formStyle" method="post">
+            <h2>Changement de mot de passe</h2>
+            <input type="password" name="password_old" placeholder="Mot de passe actuel">
+            <input type="password" name="password_new" placeholder="Nouveau mot de passe">
+            <input type="password" name="password_new_val" placeholder="Confirmation du mots de passe">
+            <input type="submit" name="changePassword" value="Enregistrer">
+        </form>
+    </div>
+    <div class="boxWrapper animate__animated animate__fadeIn animate__delay-1s">
+        <form class="formStyle" method="post">
+            <h2>Supression du compte</h2>
+            <p class="errorWrapper errorText">Attention il n'y a pas de retour en arrière possible</p>
+            <input class="dangerButton" name="deleteAccount" type="submit" value="Supprimer le compte">
+        </form>
+    </div>
+{% endblock body %}
