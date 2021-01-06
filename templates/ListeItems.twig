@@ -17,13 +17,15 @@
     </div>
     <div class="boxWrapper animate__animated animate__fadeIn animate__delay-1s">
         {% for item in itemsListe %}
+            <a href="{{ idListe }}/{{ item.id }}">
             <div class="schedule">
                 <img class="imageListeItem" src="/resources/images/{{ item.img }}" alt="<Image de {{ item.nom }}>">
-                <p class="setWidthTo15em">{{ item.nom }}</p>
+                <h2 class="setWidthTo15em">{{ item.nom }}</h2>
                 {% if estProprietaire == false %}
                     <p class="setWidthTo15em">{{ auth.translateItemReserve(item.reserve) }}</p>
                 {% endif %}
             </div>
+            </a>
         {% endfor %}
     </div>
 {% endblock body %}

@@ -1,0 +1,28 @@
+{% extends 'base.twig' %}
+{% block head %}
+    <title>MyWishlist : {{ item.nom }}</title>
+{% endblock head %}
+
+{% block body %}
+        {% if isSigned %}
+            {% include 'navbar.twig' %}
+        {% else %}
+            {% include 'headernotsigned.twig' %}
+        {% endif %}
+
+<div class="boxWrapper flexHorizontal animate__animated animate__fadeIn animate__delay-1s">
+    <div class="flex1 flexVertical">
+        <div class="flex1">
+            <a href="{{ item.url }}"><h2>{{ item.nom }}</h2></a>
+            <p>{{ item.descr }}</p>
+            <p>Tarif : {{ item.tarif }}€</p>
+        </div>
+        <div>
+            {% if estProprietaire == false %}
+                <p class="setWidthTo15em">{{ auth.translateItemReserve(item.reserve) }}</p>
+            {% endif %}
+        </div>
+    </div>
+    <img class="imageDetailItem" src="/resources/images/{{ item.img }}" alt="<Image de {{ item.nom }}>">
+</div>
+{% endblock body %}

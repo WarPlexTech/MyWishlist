@@ -17,6 +17,22 @@ class ListeController extends BaseController
         $liste = Liste::find($idListe);
         $items = Item::all()->where('liste_id','=',$idListe);
 
+        return $this->container->view->render($response, 'ListeItems.twig', [
+            'idListe' => $idListe,
+            'titreListe' => $liste->titre,
+            'descriptionListe' => $liste->description,
+            'itemsListe' => $items->toArray(),
+            'estProprietaire' => $this->estProprietaire($args),
+            'isSigned' => $this->container->auth->isSigned(),
+        ]);
+    }
+
+    public function estProprietaire($args){
+
+        $idListe = (int)$args['token'];
+
+        $liste = Liste::find($idListe);
+
         $estProprietaire = false;
 
         if($this->container->auth->isSigned()){
@@ -25,12 +41,19 @@ class ListeController extends BaseController
             }
         }
 
+        return $estProprietaire;
+    }
 
-        return $this->container->view->render($response, 'ListeItems.twig', [
-            'titreListe' => $liste->titre,
-            'descriptionListe' => $liste->description,
-            'itemsListe' => $items->toArray(),
-            'estProprietaire' => $estProprietaire,
+    public function afficherDetailItem($request, $response, $args){
+
+        $idItem = (int)$args['item'];
+
+        $detailItem = Item::find($idItem);
+
+
+        return $this->container->view->render($response, 'detailItem.twig', [
+            'item' => $detailItem->toArray(),
+            'estProprietaire' => $this->estProprietaire($args),
             'isSigned' => $this->container->auth->isSigned(),
         ]);
     }
