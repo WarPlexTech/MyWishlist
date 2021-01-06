@@ -12,13 +12,13 @@ class ListeController extends BaseController
 
     public function afficherListe($request, $response, $args){
 
-        $idListe = (int)$args['token'];
+        $tokenliste = $args['token'];
 
-        $liste = Liste::find($idListe);
-        $items = Item::all()->where('liste_id','=',$idListe);
+        $liste = Liste::all()->where('token', '=', $tokenliste)->first();
+        $items = Item::all()->where('liste_id','=',$liste->no);
 
         return $this->container->view->render($response, 'ListeItems.twig', [
-            'idListe' => $idListe,
+            'tokenliste' => $tokenliste,
             'titreListe' => $liste->titre,
             'descriptionListe' => $liste->description,
             'itemsListe' => $items->toArray(),
