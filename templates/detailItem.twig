@@ -20,13 +20,13 @@
             </div>
             <div>
                 {% if estProprietaire == false %}
-                    <p class="setWidthTo15em">{{ auth.translateItemReserve(item.reserve) }}</p>
+                    <p style="padding: 1em;"> {{ auth.translateItemReserve(item.reserve) }}</p>
                 {% endif %}
             </div>
             <div>
                 {% if estProprietaire == false %}
-                <a class="normalButton" href="{{ path_for('reservation', {token: tokenListe, item: item.id}) }}">Réserver
-                    ce cadeau</a>
+                    <a class="normalButton" href="{{ path_for('reservation', {token: tokenListe, item: item.id}) }}">Réserver
+                        ce cadeau</a>
                 {% endif %}
             </div>
 
