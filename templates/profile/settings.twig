@@ -5,11 +5,11 @@
 
 {% block body %}
     {% include 'navbar.twig' %}
-    <div class="boxWrapper animate__animated animate__fadeIn animate__delay-1s">
+    <div class="boxWrapper animate__animated animate__fadeIn">
         <h1>Paramètres de {{ username }}</h1>
     </div>
 
-    <div class="boxWrapper animate__animated animate__fadeIn animate__delay-1s">
+    <div class="boxWrapper animate__animated animate__fadeIn">
         <form class="formStyle" method="post">
             <h2>Changement de mot de passe</h2>
             {% if passerror %}
@@ -24,7 +24,7 @@
             <input type="submit" name="changePassword" value="Enregistrer">
         </form>
     </div>
-    <div class="boxWrapper animate__animated animate__fadeIn animate__delay-1s">
+    <div class="boxWrapper animate__animated animate__fadeIn">
         <form class="formStyle" method="post">
             <h2>Supression du compte</h2>
             <p class="errorWrapper errorText">Attention il n'y a pas de retour en arrière possible</p>

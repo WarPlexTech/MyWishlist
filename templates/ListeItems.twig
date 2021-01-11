@@ -11,13 +11,13 @@
         {% include 'headernotsigned.twig' %}
     {% endif %}
 
-    <div class="boxWrapper animate__animated animate__fadeIn animate__delay-1s">
+    <div class="boxWrapper animate__animated animate__fadeIn">
         <h1>{{ titreListe }}</h1>
         <p>{{ descriptionListe }}</p>
     </div>
-    <div class="boxWrapper animate__animated animate__fadeIn animate__delay-1s">
+    <div class="boxWrapper animate__animated animate__fadeIn">
         {% for item in itemsListe %}
-            <a class="cleanA" href="{{ tokenliste }}/{{ item.id }}">
+            <a class="cleanA" href="{{ path_for('detailItem', {token: tokenliste, item: item.id}) }}">
             <div class="schedule collapsible">
                 <img class="imageListeItem" src="/resources/images/{{ item.img }}" alt="<Image de {{ item.nom }}>">
                 <h2 class="setWidthTo15em">{{ item.nom }}</h2>

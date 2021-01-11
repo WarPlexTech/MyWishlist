@@ -5,18 +5,29 @@
 
 {% block body %}
     {% include 'navbar.twig' %}
-    <div class="boxWrapper animate__animated animate__fadeIn animate__delay-1s" >
+    <div class="boxWrapper animate__animated animate__fadeIn">
         <h1>Liste de {{ auth.getUsername }}</h1>
         {% for list in lists %}
-            <div class="boxWrapper animate__animated animate__fadeIn animate__delay-1s" >
+            <div class="boxWrapper animate__animated animate__fadeIn">
                 <h1>{{ list.titre }}</h1>
                 <div class="schedule">
                     <h2>{{ list.description }}</h2>
-                    <p> Date d'éxpiration : {{ list.expiration }}</p>
+                    <p> Date d'expiration : {{ list.expiration }}</p>
                 </div>
-                   <button class="normalButton" onclick="CopiLink('{{ path_for('login') }}liste/{{ list.token }}')">
-                    Copier lien
-                </button>
+                <div class="flexHorizontal flexAlignCenter flexJustify">
+                    <button id="copylink_{{ list.token }}" class="normalButton"
+                            onclick="CopiLink('{{ path_for('liste', {token: list.token}) }}', 'copylink_{{ list.token }}')">
+                        Copier lien
+                    </button>
+                    <button type="button" class="normalButton"
+                            onclick="location.href='{{ path_for('liste', {token: list.token}) }}'">
+                        Voir la liste
+                    </button>
+                    <button type="button" class="normalButton"
+                            onclick="location.href='{{ path_for('liste', {token: list.token}) }}'">
+                        Modifier la liste
+                    </button>
+                </div>
             </div>
         {% endfor %}
     </div>

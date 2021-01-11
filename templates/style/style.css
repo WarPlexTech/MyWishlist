@@ -50,6 +50,10 @@ a {
     flex-direction: column;
 }
 
+.flexJustify{
+    justify-content: space-evenly;
+}
+
 .flexHorizontal {
     display: flex;
     flex-direction: row;
@@ -72,6 +76,23 @@ a {
 .normalButton:hover {
     background: #c058f6 !important;
     border: 4px solid #c058f6 !important;
+    filter: drop-shadow(0 0 0.75rem rgba(0, 0, 0, .5));
+    cursor: pointer;
+}
+
+.greenButton {
+    border: 4px solid #16de98 !important;
+    color: whitesmoke;
+    background: none;
+    text-align: center;
+    border-radius: 40px;
+    padding: 14px 20px;
+    transition: .25s;
+}
+
+.greenButton:hover {
+    background: #16de98 !important;
+    border: 4px solid #16de98 !important;
     filter: drop-shadow(0 0 0.75rem rgba(0, 0, 0, .5));
     cursor: pointer;
 }
