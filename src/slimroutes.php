@@ -13,6 +13,7 @@ $app->post('/', 'AuthenticationController:post');
 
 $app->get('/liste/{token}', 'ListeController:afficherListe')->setName('liste');
 $app->get('/liste/{token}/{item}', 'ListeController:afficherDetailItem')->setName('detailItem');
+$app->get('/liste/{token}/{item}/reservation', 'ListeController:reserverItem')->setName('reservation');
 
 $app->group('/profile', function () use ($app) {
     $app->redirect('/','/profile');

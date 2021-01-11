@@ -4,25 +4,34 @@
 {% endblock head %}
 
 {% block body %}
-        {% if isSigned %}
-            {% include 'navbar.twig' %}
-        {% else %}
-            {% include 'headernotsigned.twig' %}
-        {% endif %}
+    {% if isSigned %}
+        {% include 'navbar.twig' %}
+    {% else %}
+        {% include 'headernotsigned.twig' %}
+    {% endif %}
 
-<div class="boxWrapper flexHorizontal animate__animated animate__fadeIn animate__delay-1s">
-    <div class="flex1 flexVertical">
-        <div class="flex1">
-            <a class="cleanA hoverHand" href="{{ item.url }}"><h2>{{ item.nom }}</h2></a>
-            <p>{{ item.descr }}</p>
-            <p>Tarif : {{ item.tarif }}€</p>
+    <div class="boxWrapper flexHorizontal animate__animated animate__fadeIn animate__delay-1s">
+        <div class="flex1 flexVertical">
+            <div class="flex1">
+
+                <a class="cleanA hoverHand" href="{{ item.url }}"><h2>{{ item.nom }}</h2></a>
+                <p>{{ item.descr }}</p>
+                <p>Tarif : {{ item.tarif }}€</p>
+            </div>
+            <div>
+                {% if estProprietaire == false %}
+                    <p class="setWidthTo15em">{{ auth.translateItemReserve(item.reserve) }}</p>
+                {% endif %}
+            </div>
+            <div>
+                {% if estProprietaire == false %}
+                <a class="normalButton" href="{{ path_for('reservation', {token: tokenListe, item: item.id}) }}">Réserver
+                    ce cadeau</a>
+                {% endif %}
+            </div>
+
+
         </div>
-        <div>
-            {% if estProprietaire == false %}
-                <p class="setWidthTo15em">{{ auth.translateItemReserve(item.reserve) }}</p>
-            {% endif %}
-        </div>
+        <img class="imageDetailItem" src="/resources/images/{{ item.img }}" alt="<Image de {{ item.nom }}>">
     </div>
-    <img class="imageDetailItem" src="/resources/images/{{ item.img }}" alt="<Image de {{ item.nom }}>">
-</div>
 {% endblock body %}

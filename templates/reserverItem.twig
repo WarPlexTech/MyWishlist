@@ -1,0 +1,21 @@
+{% extends 'base.twig' %}
+{% block head %}
+    <title>MyWishlist : Réserver {{ item.nom }}</title>
+{% endblock head %}
+
+{% block body %}
+        {% if isSigned %}
+            {% include 'navbar.twig' %}
+        {% else %}
+            {% include 'headernotsigned.twig' %}
+        {% endif %}
+    <div class="boxWrapper flexVertical animate__animated animate__fadeIn animate__delay-1s">
+        <h1>Réservation de {{ item.nom }}</h1>
+        <form class="formStyle" method="post">
+            <h2>Accompagner la réservation d'un message</h2>
+            <textarea name="messageReservation" style="width:50em;height:25em"></textarea>
+            <input class="normalButton" type="submit" value="Confirmer la réservation du cadeau">
+        </form>
+
+    </div>
+{% endblock body %}

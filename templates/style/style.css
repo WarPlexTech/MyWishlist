@@ -229,7 +229,7 @@ a {
     margin-top: 10px;
 }
 
-.formStyle input[type="text"], .formStyle input[type="password"] {
+.formStyle input[type="text"], .formStyle input[type="password"], .formStyle textarea {
     border: 4px solid #a216de;
     color: aliceblue;
     background: none;
@@ -241,11 +241,11 @@ a {
     transition: 0.25s;
 }
 
-.formStyle input[type="text"]:hover, .formStyle input[type="password"]:hover {
+.formStyle input[type="text"]:hover, .formStyle input[type="password"]:hover, .formStyle textarea:hover {
     padding: 14px 50px;
 }
 
-.formStyle input[type="text"]:focus, .formStyle input[type="password"]:focus {
+.formStyle input[type="text"]:focus, .formStyle input[type="password"]:focus, .formStyle textarea:focus {
     padding: 14px 50px;
     border: 4px solid #16de98;
 }

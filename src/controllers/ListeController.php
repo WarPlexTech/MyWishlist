@@ -72,9 +72,26 @@ class ListeController extends BaseController
 
 
         return $this->container->view->render($response, 'detailItem.twig', [
+            'tokenListe' => $args['token'],
             'item' => $detailItem->toArray(),
             'estProprietaire' => $this->estProprietaire($args),
             'isSigned' => $this->container->auth->isSigned(),
         ]);
     }
+
+    public function reserverItem($request, $response, $args){
+
+        if(! $this->container->auth->isSigned()){
+            return $response->withRedirect($this->container->router->pathFor('login'));
+        }
+
+        $idItem = (int)$args['item'];
+
+        $item = Item::find($idItem);
+
+        return $this->container->view->render($response, 'reserverItem.twig', [
+            'item' => $item->toArray(),
+            'isSigned' => $this->container->auth->isSigned(),
+        ]);
+        }
 }
