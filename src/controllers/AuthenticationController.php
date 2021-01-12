@@ -16,6 +16,10 @@ class AuthenticationController extends BaseController
         //Si la personne est deja authentifie, la redirige vers son dashboard
         if($this->container->auth->isSigned()) return $response->withRedirect($this->container->router->pathFor('profile.dashboard'));
 
+        if($request->getQueryParams()['redirect']){
+            $_SESSION['redirect'] = $request->getQueryParams()['redirect'];
+        }
+
         return $this->container->view->render($response, 'login.twig');
     }
 
@@ -47,6 +51,15 @@ class AuthenticationController extends BaseController
         }
 
         $_SESSION['user'] = $useraccount['id'];
+
+        if($_SESSION['redirect']){
+
+            $tmp = $_SESSION['redirect'];
+            unset($_SESSION['redirect']);
+
+            return $response->withRedirect($tmp);
+
+        }
 
         return $response->withRedirect($this->container->router->pathFor('profile.dashboard'));
     }

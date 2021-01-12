@@ -12,20 +12,34 @@
 
     <div class="boxWrapper flexHorizontal animate__animated animate__fadeIn animate__delay-1s">
         <div class="flex1 flexVertical">
-            <div class="flex1">
+            <div class="flex05">
 
                 <a class="cleanA hoverHand" href="{{ item.url }}"><h2>{{ item.nom }}</h2></a>
                 <p>{{ item.descr }}</p>
                 <p>Tarif : {{ item.tarif }}€</p>
             </div>
-            <div>
-                {% if estProprietaire == false %}
-                    <p style="padding: 1em;"> {{ auth.translateItemReserve(item.reserve) }}</p>
+            <div class="flex1">
+                {% if item.message != "" %}
+                    {% if estProprietaire == false or liste.isExpired %}
+                        <h3>Message :</h3>
+                        {% if auth.isSigned %}
+                            <p style="margin: 1em 3em;text-align: center;">{{ item.message }}</p>
+                        {% else %}
+                            <p style="margin: 1em 3em;text-align: center; color: grey; font-style: italic">Vous devez vous identifier pour voir le message</p>
+                        {% endif %}
+                    {% endif %}
                 {% endif %}
             </div>
             <div>
                 {% if estProprietaire == false %}
-                    <a class="normalButton" href="{{ path_for('reservation', {token: tokenListe, item: item.id}) }}">Réserver
+                    <p style="padding: 1em;"> {{ auth.translateItemReserve(item.reserve) }}</p>
+                {% elseif liste.isExpired %}
+                    <p style="padding: 1em;"> {{ auth.translateItemReserve(item.reserve, true) }} </p>
+                {% endif %}
+            </div>
+            <div>
+                {% if estProprietaire == false and not liste.isExpired and not item.reserve %}
+                    <a class="normalButton" href="{{ path_for('reservation', {token: liste.token, item: item.id}) }}">Réserver
                         ce cadeau</a>
                 {% endif %}
             </div>

@@ -241,7 +241,7 @@ a {
     transition: 0.25s;
 }
 
-.formStyle input[type="text"]:hover, .formStyle input[type="password"]:hover, .formStyle textarea:hover {
+.formStyle input[type="text"]:hover, .formStyle input[type="password"]:hover {
     padding: 14px 50px;
 }
 
@@ -491,4 +491,8 @@ a:hover.cleanA, a:visited.cleanA, a:link.cleanA, a:active.cleanA
 
 .flex1 {
     flex: 1;
+}
+
+.flex05 {
+    flex: 0.5;
 }

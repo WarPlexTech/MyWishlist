@@ -5,6 +5,7 @@ namespace MyWishlist\controllers;
 
 use MyWishlist\models\Item;
 use MyWishlist\models\Liste;
+use Psr\Http\Message\RequestInterface;
 
 
 class ListeController extends BaseController
@@ -21,13 +22,12 @@ class ListeController extends BaseController
 
         $tokenliste = $args['token'];
 
-        $liste = Liste::all()->where('token', '=', $tokenliste)->first();
+        $liste = Liste::all()->where('token',"=",$args['token'])->first();
         $items = Item::all()->where('liste_id','=',$liste->no);
+        $liste = $this->processList($liste);
 
         return $this->container->view->render($response, 'ListeItems.twig', [
-            'tokenliste' => $tokenliste,
-            'titreListe' => $liste->titre,
-            'descriptionListe' => $liste->description,
+            'liste' => $liste,
             'itemsListe' => $items->toArray(),
             'estProprietaire' => $this->estProprietaire($args),
             'isSigned' => $this->container->auth->isSigned(),
@@ -58,6 +58,17 @@ class ListeController extends BaseController
     }
 
     /**
+     * Permet de transformer une liste venant d'une BDD en array tout en lui ajoutant l'information de l'etat d'expiration
+     * @param $inputList
+     * @return mixed
+     */
+    public function processList($inputList){
+        $liste = $inputList->toArray();
+        $liste['isExpired'] = date("Y-m-d H:i:s") >= $inputList->expiration;
+        return $liste;
+    }
+
+    /**
      * Fonction permettant un affichage detaille des items presents dans une liste en cliquant ces derniers
      * @param $request
      * @param $response
@@ -67,27 +78,32 @@ class ListeController extends BaseController
     public function afficherDetailItem($request, $response, $args){
 
         $idItem = (int)$args['item'];
-
+        $liste = Liste::all()->where('token',"=",$args['token'])->first();
+        $liste = $this->processList($liste);
         $detailItem = Item::find($idItem);
 
 
         return $this->container->view->render($response, 'detailItem.twig', [
-            'tokenListe' => $args['token'],
+            'liste' => $liste,
             'item' => $detailItem->toArray(),
             'estProprietaire' => $this->estProprietaire($args),
             'isSigned' => $this->container->auth->isSigned(),
         ]);
     }
 
-    public function reserverItem($request, $response, $args){
-
-        if(! $this->container->auth->isSigned()){
-            return $response->withRedirect($this->container->router->pathFor('login'));
-        }
+    public function reserverItem(RequestInterface $request, $response, $args){
 
         $idItem = (int)$args['item'];
 
         $item = Item::find($idItem);
+
+        if(! $this->container->auth->isSigned()){
+            return $response->withRedirect($this->container->router->pathFor('login', [], ['redirect' => $this->container->router->pathFor('reservation',['token' => $args['token'], 'item' => $args['item']])]));
+        }
+
+        if($this->estProprietaire($args) || $item->reserve){
+            return $response->withRedirect($this->container->router->pathFor('login'));
+        }
 
         return $this->container->view->render($response, 'reserverItem.twig', [
             'item' => $item->toArray(),

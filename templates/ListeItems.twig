@@ -12,19 +12,21 @@
     {% endif %}
 
     <div class="boxWrapper animate__animated animate__fadeIn">
-        <h1>{{ titreListe }}</h1>
-        <p>{{ descriptionListe }}</p>
+        <h1>{{ liste.titre }}</h1>
+        <p>{{ liste.description }}</p>
     </div>
     <div class="boxWrapper animate__animated animate__fadeIn">
         {% for item in itemsListe %}
-            <a class="cleanA" href="{{ path_for('detailItem', {token: tokenliste, item: item.id}) }}">
-            <div class="schedule collapsible">
-                <img class="imageListeItem" src="/resources/images/{{ item.img }}" alt="<Image de {{ item.nom }}>">
-                <h2 class="setWidthTo15em">{{ item.nom }}</h2>
-                {% if estProprietaire == false %}
-                    <p class="setWidthTo15em">{{ auth.translateItemReserve(item.reserve) }}</p>
-                {% endif %}
-            </div>
+            <a class="cleanA" href="{{ path_for('detailItem', {token: liste.token, item: item.id}) }}">
+                <div class="schedule collapsible">
+                    <img class="imageListeItem" src="/resources/images/{{ item.img }}" alt="<Image de {{ item.nom }}>">
+                    <h2 class="setWidthTo15em">{{ item.nom }}</h2>
+                    {% if estProprietaire == false %}
+                        <p class="setWidthTo15em">{{ auth.translateItemReserve(item.reserve) }}</p>
+                    {% elseif liste.isExpired %}
+                        <p style="padding: 1em;"> {{ auth.translateItemReserve(item.reserve, true) }} </p>
+                    {% endif %}
+                </div>
             </a>
         {% endfor %}
     </div>
