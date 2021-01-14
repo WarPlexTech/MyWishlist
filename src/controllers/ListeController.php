@@ -6,6 +6,8 @@ namespace MyWishlist\controllers;
 use MyWishlist\models\Item;
 use MyWishlist\models\Liste;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
 
 class ListeController extends BaseController
@@ -109,5 +111,50 @@ class ListeController extends BaseController
             'item' => $item->toArray(),
             'isSigned' => $this->container->auth->isSigned(),
         ]);
+        }
+
+        public function getCreerListe(ServerRequestInterface $request, ResponseInterface $response){
+            return $this->container->view->render($response, 'creerListe.twig');
+        }
+
+        public function postCreerListe($request, $response, $args){
+
+        $idUtilisateur= $_SESSION['user'];
+
+        $token = str_replace('.', "", uniqid("ls-", true));
+
+        while (Liste::all()->where('token','=', $token)->first()){
+            $token = str_replace('.', "", uniqid("ls-", true));
+        }
+
+        if($request->getParsedBody()['expiration'] <= date("Y-m-d H:i:s")){
+            //TODO
+        }
+
+        if($request->getParsedBody()['titre'] ==""){
+            return $this->container->view->render($response, 'creerListe.twig', ['error' => 'Veuillez mettre un titre']);
+        }
+
+        if($request->getParsedBody()['description'] ==""){
+            return $this->container->view->render($response, 'creerListe.twig', ['error' => 'Veuillez mettre une description']);
+        }
+
+        if($request->getParsedBody()['expiration'] ==""){
+            return $this->container->view->render($response, 'creerListe.twig', ['error' => 'Veuillez mettre une date d\'expiration']);
+        }
+
+
+        $nouvelleListe = liste::create([
+            'user_id' => $idUtilisateur,
+            'titre' => $request->getParsedBody()['titre'],
+            'description' => $request->getParsedBody()['description'],
+            'expiration' => $request->getParsedBody()['expiration'],
+            'token' => $token,
+        ]);
+
+
+        return $response->withRedirect($this->container->router->pathFor('liste', [
+                'token' => $token
+            ]));
         }
 }
