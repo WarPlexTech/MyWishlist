@@ -20,12 +20,13 @@ class ListeController extends BaseController
      * @param $args argument(s) passes grace a l'url, ici l'id de la liste
      * @return mixed rendu de l'affichage de la liste
      */
-    public function afficherListe($request, $response, $args){
+    public function afficherListe($request, $response, $args)
+    {
 
         $tokenliste = $args['token'];
 
-        $liste = Liste::all()->where('token',"=",$args['token'])->first();
-        $items = Item::all()->where('liste_id','=',$liste->no);
+        $liste = Liste::all()->where('token', "=", $args['token'])->first();
+        $items = Item::all()->where('liste_id', '=', $liste->no);
         $liste = $this->processList($liste);
 
         return $this->container->view->render($response, 'ListeItems.twig', [
@@ -42,16 +43,17 @@ class ListeController extends BaseController
      * @param $args argument(s) passes dans l'url, ici l'id de la liste
      * @return bool true si l'utilisateur qui consulte est le proprietaire
      */
-    public function estProprietaire($args){
+    public function estProprietaire($args)
+    {
 
-        $tokenliste = (int)$args['token'];
+        $tokenliste = $args['token'];
 
         $liste = Liste::all()->where('token', '=', $tokenliste)->first();
 
         $estProprietaire = false;
 
-        if($this->container->auth->isSigned()){
-            if($liste->user_id == $this->container->auth->getUser()->id){
+        if ($this->container->auth->isSigned()) {
+            if ($liste->user_id == $this->container->auth->getUser()->id) {
                 $estProprietaire = true;
             }
         }
@@ -64,7 +66,8 @@ class ListeController extends BaseController
      * @param $inputList
      * @return mixed
      */
-    public function processList($inputList){
+    public function processList($inputList)
+    {
         $liste = $inputList->toArray();
         $liste['isExpired'] = date("Y-m-d H:i:s") >= $inputList->expiration;
         return $liste;
@@ -77,10 +80,11 @@ class ListeController extends BaseController
      * @param $args argument(s) passes dans l'url, ici l'id de l'item
      * @return mixed rendu de l'affichage des informations detaillees de l'item
      */
-    public function afficherDetailItem($request, $response, $args){
+    public function afficherDetailItem($request, $response, $args)
+    {
 
         $idItem = (int)$args['item'];
-        $liste = Liste::all()->where('token',"=",$args['token'])->first();
+        $liste = Liste::all()->where('token', "=", $args['token'])->first();
         $liste = $this->processList($liste);
         $detailItem = Item::find($idItem);
 
@@ -93,17 +97,18 @@ class ListeController extends BaseController
         ]);
     }
 
-    public function reserverItem(RequestInterface $request, $response, $args){
+    public function reserverItem(RequestInterface $request, $response, $args)
+    {
 
         $idItem = (int)$args['item'];
 
         $item = Item::find($idItem);
 
-        if(! $this->container->auth->isSigned()){
-            return $response->withRedirect($this->container->router->pathFor('login', [], ['redirect' => $this->container->router->pathFor('reservation',['token' => $args['token'], 'item' => $args['item']])]));
+        if (!$this->container->auth->isSigned()) {
+            return $response->withRedirect($this->container->router->pathFor('login', [], ['redirect' => $this->container->router->pathFor('reservation', ['token' => $args['token'], 'item' => $args['item']])]));
         }
 
-        if($this->estProprietaire($args) || $item->reserve){
+        if ($this->estProprietaire($args) || $item->reserve) {
             return $response->withRedirect($this->container->router->pathFor('login'));
         }
 
@@ -111,35 +116,37 @@ class ListeController extends BaseController
             'item' => $item->toArray(),
             'isSigned' => $this->container->auth->isSigned(),
         ]);
-        }
+    }
 
-        public function getCreerListe(ServerRequestInterface $request, ResponseInterface $response){
-            return $this->container->view->render($response, 'creerListe.twig');
-        }
+    public function getCreerListe(ServerRequestInterface $request, ResponseInterface $response)
+    {
+        return $this->container->view->render($response, 'creerListe.twig');
+    }
 
-        public function postCreerListe($request, $response, $args){
+    public function postCreerListe($request, $response, $args)
+    {
 
-        $idUtilisateur= $_SESSION['user'];
+        $idUtilisateur = $_SESSION['user'];
 
         $token = str_replace('.', "", uniqid("ls-", true));
 
-        while (Liste::all()->where('token','=', $token)->first()){
+        while (Liste::all()->where('token', '=', $token)->first()) {
             $token = str_replace('.', "", uniqid("ls-", true));
         }
 
-        if($request->getParsedBody()['expiration'] <= date("Y-m-d H:i:s")){
+        if ($request->getParsedBody()['expiration'] <= date("Y-m-d H:i:s")) {
             //TODO
         }
 
-        if($request->getParsedBody()['titre'] ==""){
+        if ($request->getParsedBody()['titre'] == "") {
             return $this->container->view->render($response, 'creerListe.twig', ['error' => 'Veuillez mettre un titre']);
         }
 
-        if($request->getParsedBody()['description'] ==""){
+        if ($request->getParsedBody()['description'] == "") {
             return $this->container->view->render($response, 'creerListe.twig', ['error' => 'Veuillez mettre une description']);
         }
 
-        if($request->getParsedBody()['expiration'] ==""){
+        if ($request->getParsedBody()['expiration'] == "") {
             return $this->container->view->render($response, 'creerListe.twig', ['error' => 'Veuillez mettre une date d\'expiration']);
         }
 
@@ -154,7 +161,64 @@ class ListeController extends BaseController
 
 
         return $response->withRedirect($this->container->router->pathFor('liste', [
-                'token' => $token
+            'token' => $token
+        ]));
+    }
+
+    public function getAjouterItem(ServerRequestInterface $request, ResponseInterface $response, $args)
+    {
+        $tokenliste = $args['token'];
+
+        if (!$this->estProprietaire($args)) {
+            return $response->withRedirect($this->container->router->pathFor('liste', [
+                'token' => $tokenliste
             ]));
         }
+
+        return $this->container->view->render($response, 'ajouterItem.twig');
+    }
+
+    public function postAjouterItem($request, $response, $args)
+    {
+        $tokenliste = $args['token'];
+
+        $liste = Liste::all()->where('token', "=", $tokenliste)->first();
+
+        if ($request->getParsedBody()['nom'] == "") {
+            return $this->container->view->render($response, 'ajouterItem.twig', ['error' => 'Veuillez mettre un nom']);
+        }
+
+        if ($request->getParsedBody()['descr'] == "") {
+            return $this->container->view->render($response, 'ajouterItem.twig', ['error' => 'Veuillez mettre une description']);
+        }
+
+        if ($request->getParsedBody()['tarif'] == "") {
+            return $this->container->view->render($response, 'ajouterItem.twig', ['error' => 'Veuillez mettre un prix']);
+        }
+
+        $nouvelItem = item::create([
+            'liste_id' => $liste->no,
+            'nom' => $request->getParsedBody()['nom'],
+            'descr' => $request->getParsedBody()['descr'],
+            'tarif' => $request->getParsedBody()['tarif'],
+            'url' => $request->getParsedBody()['url'],
+        ]);
+
+        return $response->withRedirect($this->container->router->pathFor('liste', [
+            'token' => $tokenliste
+        ]));
+    }
+
+    public function getSupprimerItem($request, $response, $args){
+
+        $tokenListe = $args['token'];
+
+        $idItem = $args['item'];
+
+        Item::find($idItem)->delete();
+
+        return $response->withRedirect($this->container->router->pathFor('liste', [
+            'token' => $tokenListe
+        ]));
+    }
 }

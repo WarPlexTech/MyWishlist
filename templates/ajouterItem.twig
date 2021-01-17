@@ -1,0 +1,29 @@
+{% extends 'base.twig' %}
+{% block head %}
+    <title>MyWishlist : ajouter un cadeau</title>
+{% endblock head %}
+
+{% block body %}
+
+    {% include 'navbar.twig' %}
+
+    <div class="boxWrapper flexHorizontal animate__animated animate__fadeIn animate__delay-1s">
+        <div class="flex1 flexVertical">
+            <form class="formStyle" method="post">
+                {% if error %}
+                    <p class="errorText errorWrapper">{{ error }}</p>
+                {% endif %}
+                <h1>Ajouter un cadeau</h1>
+                <h2>Nom</h2>
+                <input type="text" name="nom" placeholder="Nom du cadeau"><br>
+                <h2>Description</h2>
+                <textarea name="descr" style="width:50em;height:25em"></textarea><br>
+                <h2>Prix </h2>
+                <input type="number" name="tarif" placeholder="Prix du cadeau"><br>
+                <h2>Lien (optionnel) </h2>
+                <input type="text" name="url" placeholder="Lien vers le cadeau"><br>
+                <input class="normalButton" type="submit" value="Confirmer l'ajout du cadeau">
+            </form>
+        </div>
+    </div>
+{% endblock body %}

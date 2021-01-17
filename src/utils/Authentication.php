@@ -63,7 +63,7 @@ class Authentication
             if($id == 0) return 'Cadeau non reservé';
             return 'Réservé par '.Account::find($id)->username;
         }
-        if($id == 0) return 'Ce cadeau n\'à pas été offert';
+        if($id == 0) return 'Ce cadeau n\'a pas été offert';
         return "Ce cadeau a été offert par ".Account::find($id)->username;
     }
 

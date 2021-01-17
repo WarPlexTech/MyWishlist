@@ -33,6 +33,10 @@
                             onclick="location.href='{{ path_for('liste', {token: list.token}) }}'">
                         Modifier la liste
                     </button>
+                    <button type="button" class="normalButton"
+                            onclick="location.href='{{ path_for('ajouterItem', {token: list.token}) }}'">
+                            Ajouter un item
+                    </button>
                 </div>
             </div>
         {% endfor %}

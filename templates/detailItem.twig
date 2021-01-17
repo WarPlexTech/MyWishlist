@@ -43,6 +43,12 @@
                         ce cadeau</a>
                 {% endif %}
             </div>
+            <div>
+                {%  if estProprietaire == true %}
+                    <a class="normalButton" href="{{ path_for('supprimerItem', {token:liste.token, item:item.id}) }}">Supprimer
+                        ce cadeau</a>
+                {% endif %}
+            </div>
 
 
         </div>
