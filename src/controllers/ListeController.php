@@ -96,6 +96,10 @@ class ListeController extends BaseController
         ]);
     }
 
+    /**
+     * Fonction permettant la reservation d'un cadeau
+     * Redirige vers la page de connexion/creation de compte si l'utilisateur n'est pas authentifie
+     */
     public function reserverItem(ServerRequestInterface $request, $response, $args)
     {
 
@@ -117,6 +121,9 @@ class ListeController extends BaseController
         ]);
     }
 
+    /**
+     * Fonction permettant d'inserer le message de reservation d'un cadeau dans la BDD
+     */
     public function postReserverItem(ServerRequestInterface $request, ResponseInterface $response, $args)
     {
 
@@ -139,6 +146,9 @@ class ListeController extends BaseController
         return $response->withRedirect($this->container->router->pathFor('detailItem', ['token' => $args['token'], 'item' => $args['item']]));
     }
 
+    /**
+     * Fonction permettant de ne plus réserver un cadeau si l'utilisateur change d'avis
+     */
     public function nePlusReserverItem(ServerRequestInterface $request, ResponseInterface $response, $args)
     {
 
@@ -161,11 +171,19 @@ class ListeController extends BaseController
         return $response->withRedirect($this->container->router->pathFor('detailItem', ['token' => $args['token'], 'item' => $args['item']]));
     }
 
+    /**
+     * Fonction permettant la creation d'une liste en renvoyant l'utilisateur sur la page de creation de liste
+     */
     public function getCreerListe(ServerRequestInterface $request, ResponseInterface $response)
     {
         return $this->container->view->render($response, 'creerListe.twig');
     }
 
+    /**
+     * Fonction permettant de creer une liste
+     * Elle verifie si tous les champs ont ete remplis par l'utilisateur et envoie une erreur si non
+     * Elle enregistre les informations dans la BDD après validation de l'utilisateur
+     */
     public function postCreerListe($request, $response, $args)
     {
 
@@ -208,6 +226,9 @@ class ListeController extends BaseController
         ]));
     }
 
+    /**
+     * Fonction permettant l'affichage de la page de modification de liste
+     */
     public function editListe(ServerRequestInterface $request, ResponseInterface $response, $args)
     {
         $liste = Liste::all()->where('token', "=", $args['token'])->first();
@@ -218,6 +239,11 @@ class ListeController extends BaseController
         ]);
     }
 
+    /**
+     * Fonction permettant la modification de la liste
+     * Elle verifie si tous les champs sont remplis par l'utilisateur et renvoie une erreur si non
+     * Elle enregistre les nouvelles informations dans la BDD après validation de l'utilisateur
+     */
     public function postEditListe($request, $response, $args)
     {
 
@@ -244,6 +270,9 @@ class ListeController extends BaseController
         return $response->withRedirect($this->container->router->pathFor('login'));
     }
 
+    /**
+     * Fonction permettant l'affichage de la page d'ajout d'un item dans une liste donnee
+     */
     public function getAjouterItem(ServerRequestInterface $request, ResponseInterface $response, $args)
     {
         $tokenliste = $args['token'];
@@ -257,6 +286,11 @@ class ListeController extends BaseController
         return $this->container->view->render($response, 'ajouterItem.twig');
     }
 
+    /**
+     * Fonction permettant d'ajouter un item dans une liste donnee
+     * Elle verifie si tous les champs ont été remplis par l'utilisateur et renvoie une erreur si non
+     * Elle enregistre les informations dans la BDD après validation de l'utilisateur
+     */
     public function postAjouterItem($request, $response, $args)
     {
         $tokenliste = $args['token'];
@@ -288,6 +322,9 @@ class ListeController extends BaseController
         ]));
     }
 
+    /**
+     * Fonction permettant la suppression d'un item
+     */
     public function getSupprimerItem($request, $response, $args){
 
         $tokenListe = $args['token'];
