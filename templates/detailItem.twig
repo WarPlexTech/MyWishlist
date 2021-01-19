@@ -55,6 +55,10 @@
 
 
         </div>
-        <img class="imageDetailItem" src="/resources/images/{{ item.img }}" alt="<Image de {{ item.nom }}>">
+        {% if item.img %}
+        <img class="imageDetailItem" src="{{ base_url() }}/resources/images/{{ item.img }}" alt="<Image de {{ item.nom }}>">
+        {% else %}
+        <img class="imageDetailItem" src="https://image.freepik.com/free-vector/christmas-new-year-s-day-red-gift-box-white-background-illustration_164911-157.jpg" alt="<Image de {{ item.nom }}>">
+        {% endif %}
     </div>
 {% endblock body %}
