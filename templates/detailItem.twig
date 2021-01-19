@@ -41,6 +41,9 @@
                 {% if estProprietaire == false and not liste.isExpired and not item.reserve %}
                     <a class="normalButton" href="{{ path_for('reservation', {token: liste.token, item: item.id}) }}">Réserver
                         ce cadeau</a>
+                {% elseif estProprietaire == false and not liste.isExpired and item.reserve == auth.getUserId %}
+                    <a class="dangerButton" style="padding: 8px" href="{{ path_for('noreservation', {token: liste.token, item: item.id}) }}">Ne plus réserver
+                        ce cadeau</a>
                 {% endif %}
             </div>
             <div>

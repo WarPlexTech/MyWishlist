@@ -7,8 +7,8 @@
     {% include 'navbar.twig' %}
 
     <div class="boxWrapper animate__animated animate__fadeIn">
-        <h1>Liste de {{ auth.getUsername }}</h1>
-        <a class="normalButton" href="{{ path_for('creerListe') }}">Créer une liste</a>
+        <h1>Listes de {{ auth.getUsername }}</h1>
+        <a class="normalButton" style="padding: 8px" href="{{ path_for('creerListe') }}">Créer une liste</a>
     </div>
 
     {% if lists %}
@@ -30,7 +30,7 @@
                         Voir la liste
                     </button>
                     <button type="button" class="normalButton"
-                            onclick="location.href='{{ path_for('liste', {token: list.token}) }}'">
+                            onclick="location.href='{{ path_for('editListe', {token: list.token}) }}'">
                         Modifier la liste
                     </button>
                     <button type="button" class="normalButton"

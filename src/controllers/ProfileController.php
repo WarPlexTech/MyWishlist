@@ -38,7 +38,7 @@ class ProfileController extends BaseController
         {
             Account::find($_SESSION['user'])->delete();
             return $this->disconnect($request, $response);
-            //TODO: SUPPRIMER LES LISTES ET ITEMS LIES
+            //TODO: SUPPRIMER LES LISTES ET ITEMS LIES (n'est pas demandé dans les consignes, cette fonctionnalité a donc été abandonné afin de se concentrer sur d'autres jugées plus pertinantes)
         }
         elseif(isset($request->getParsedBody()['changePassword']))
         {

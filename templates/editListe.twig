@@ -1,0 +1,27 @@
+{% extends 'base.twig' %}
+{% block head %}
+    <title>MyWishlist : créer une liste</title>
+{% endblock head %}
+
+{% block body %}
+
+    {% include 'navbar.twig' %}
+
+    <div class="boxWrapper flexHorizontal animate__animated animate__fadeIn animate__delay-1s">
+        <div class="flex1 flexVertical">
+            <form class="formStyle" method="post">
+                <h1>Edition de : {{ liste.titre }}</h1>
+                {% if error %}
+                    <p class="errorText errorWrapper">{{ error }}</p>
+                {% endif %}
+                <h2>Titre de la liste</h2>
+                <input type="text" name="titre" placeholder="Titre de la liste" value="{{ liste.titre }}"><br>
+                <h2>Description de la liste</h2>
+                <textarea name="description" style="width:50em;height:25em">{{ liste.description }}</textarea><br>
+                <h2>Date d'expiration de la liste</h2>
+                <input type="date" name="expiration" value="{{ liste.expiration }}">
+                <input class="normalButton" type="submit" value="Confirmer la nouvelle liste">
+            </form>
+        </div>
+    </div>
+{% endblock body %}

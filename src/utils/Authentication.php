@@ -33,6 +33,15 @@ class Authentication
     }
 
     /**
+     * Permet de retourner l'id' d'utilisateur
+     */
+    public function getUserId()
+    {
+        if(!$this->isSigned()) return null;
+        return $this->getUser()->id;
+    }
+
+    /**
      * Permet de verifier si un mot de passe donne est le bon
      * @param $password
      * @return bool

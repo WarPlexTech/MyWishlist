@@ -5,7 +5,6 @@ namespace MyWishlist\controllers;
 
 use MyWishlist\models\Item;
 use MyWishlist\models\Liste;
-use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -97,7 +96,7 @@ class ListeController extends BaseController
         ]);
     }
 
-    public function reserverItem(RequestInterface $request, $response, $args)
+    public function reserverItem(ServerRequestInterface $request, $response, $args)
     {
 
         $idItem = (int)$args['item'];
@@ -118,6 +117,50 @@ class ListeController extends BaseController
         ]);
     }
 
+    public function postReserverItem(ServerRequestInterface $request, ResponseInterface $response, $args)
+    {
+
+        $idItem = (int)$args['item'];
+
+        $item = Item::find($idItem);
+
+        if (!$this->container->auth->isSigned()) {
+            return $response->withRedirect($this->container->router->pathFor('login', [], ['redirect' => $this->container->router->pathFor('reservation', ['token' => $args['token'], 'item' => $args['item']])]));
+        }
+
+        if ($this->estProprietaire($args) || $item->reserve) {
+            return $response->withRedirect($this->container->router->pathFor('login'));
+        }
+
+        $item->message = $request->getParsedBody()['messageReservation'];
+        $item->reserve = $_SESSION['user'];
+        $item->save();
+
+        return $response->withRedirect($this->container->router->pathFor('detailItem', ['token' => $args['token'], 'item' => $args['item']]));
+    }
+
+    public function nePlusReserverItem(ServerRequestInterface $request, ResponseInterface $response, $args)
+    {
+
+        $idItem = (int)$args['item'];
+
+        $item = Item::find($idItem);
+
+        if (!$this->container->auth->isSigned()) {
+            return $response->withRedirect($this->container->router->pathFor('login', [], ['redirect' => $this->container->router->pathFor('reservation', ['token' => $args['token'], 'item' => $args['item']])]));
+        }
+
+        if ($this->estProprietaire($args)) {
+            return $response->withRedirect($this->container->router->pathFor('login'));
+        }
+
+        $item->message = null;
+        $item->reserve = 0;
+        $item->save();
+
+        return $response->withRedirect($this->container->router->pathFor('detailItem', ['token' => $args['token'], 'item' => $args['item']]));
+    }
+
     public function getCreerListe(ServerRequestInterface $request, ResponseInterface $response)
     {
         return $this->container->view->render($response, 'creerListe.twig');
@@ -135,7 +178,7 @@ class ListeController extends BaseController
         }
 
         if ($request->getParsedBody()['expiration'] <= date("Y-m-d H:i:s")) {
-            //TODO
+            return $this->container->view->render($response, 'creerListe.twig', ['error' => "Veuillez selectionner une date ultérieure à celle d'aujourd'hui"]);
         }
 
         if ($request->getParsedBody()['titre'] == "") {
@@ -163,6 +206,42 @@ class ListeController extends BaseController
         return $response->withRedirect($this->container->router->pathFor('liste', [
             'token' => $token
         ]));
+    }
+
+    public function editListe(ServerRequestInterface $request, ResponseInterface $response, $args)
+    {
+        $liste = Liste::all()->where('token', "=", $args['token'])->first();
+        $liste = $this->processList($liste);
+
+        return $this->container->view->render($response, 'editListe.twig', [
+            'liste' => $liste
+        ]);
+    }
+
+    public function postEditListe($request, $response, $args)
+    {
+
+        $liste = Liste::all()->where('token', "=", $args['token'])->first();
+
+        if ($request->getParsedBody()['titre'] == "") {
+            return $this->container->view->render($response, 'creerListe.twig', ['error' => 'Veuillez mettre un titre']);
+        }
+
+        if ($request->getParsedBody()['description'] == "") {
+            return $this->container->view->render($response, 'creerListe.twig', ['error' => 'Veuillez mettre une description']);
+        }
+
+        if ($request->getParsedBody()['expiration'] == "") {
+            return $this->container->view->render($response, 'creerListe.twig', ['error' => 'Veuillez mettre une date d\'expiration']);
+        }
+
+        $liste->titre = $request->getParsedBody()['titre'];
+        $liste->description = $request->getParsedBody()['description'];
+        $liste->expiration = $request->getParsedBody()['expiration'];
+
+        $liste->save();
+
+        return $response->withRedirect($this->container->router->pathFor('login'));
     }
 
     public function getAjouterItem(ServerRequestInterface $request, ResponseInterface $response, $args)

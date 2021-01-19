@@ -14,11 +14,16 @@ $app->post('/', 'AuthenticationController:post');
 $app->get('/liste/{token}/ajouterItem','ListeController:getAjouterItem')->setName('ajouterItem');
 $app->post('/liste/{token}/ajouterItem', 'ListeController:postAjouterItem');
 
+$app->get('/liste/{token}/edit','ListeController:editListe')->setName('editListe');
+$app->post('/liste/{token}/edit', 'ListeController:postEditListe');
+
 $app->get('/liste/{token}/{item}/supprimer', 'ListeController:getSupprimerItem')->setName('supprimerItem');
 
 $app->get('/liste/{token}', 'ListeController:afficherListe')->setName('liste');
 $app->get('/liste/{token}/{item}', 'ListeController:afficherDetailItem')->setName('detailItem');
 $app->get('/liste/{token}/{item}/reservation', 'ListeController:reserverItem')->setName('reservation');
+$app->get('/liste/{token}/{item}/noreservation', 'ListeController:nePlusReserverItem')->setName('noreservation');
+$app->post('/liste/{token}/{item}/reservation', 'ListeController:postReserverItem');
 
 
 
