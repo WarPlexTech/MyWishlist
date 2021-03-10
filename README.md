@@ -6,7 +6,7 @@ Les documents concernant la répartition des tâches, le processus d'installatio
 
 ## Site en ligne :
 
-Le site est en ligne sur https://warplextech.com/MyWishlist/
+Le site est en ligne sur https://warplextech.com/MyWishlist/ (Down)
 
 Des données de bases existent déjà sur le site.
 
